@@ -1,12 +1,7 @@
-function ok(){
-    document.querySelector("#alert").style.display = "none";
-    document.querySelector("#main").style.display = "block";
-    document.querySelector("#main2").style.display = "block";
+function search(){
     var city =  document.querySelector("#city").value; 
     localStorage.setItem("city" , city)
     var API = 'https://api.openweathermap.org/data/2.5/weather?q='+ city +'&appid=77519a1e4cafcc5abe44929d48fcaa31&units=metric';
-    document.querySelector("#main2").style.display = "block";
-
     getData(API)
     
     async function getData(url) {
@@ -14,34 +9,34 @@ function ok(){
         const data = await res.json()
         console.log(data)
         try{
-
-        
-        document.querySelector("#main #temp").innerHTML =  +  data.main.temp + "°" + " " + data.weather[0].main ;
-        document.querySelector("#main2 #humidity").innerHTML = "humidity : "  +  data.main.humidity;
-        document.querySelector("#main2 #description").innerHTML =  "description  :  " +  data.weather[0].description ;
-        document.querySelector("#main2 #temp_max").innerHTML = "Temperature max : "  +  data.main.temp_max + "°";
-        document.querySelector("#main2 #temp_min").innerHTML = "Temperature min : "  +  data.main.temp_min + "°";
-        document.querySelector("#main2 #windDeg").innerHTML = "wind degree : "  +  data.wind.deg + "°";
-        document.querySelector("#main2 #windSpeed").innerHTML = "wind speed : "  +  data.wind.speed + "°";
-        document.querySelector("#main2 #pressure").innerHTML = "pressure :  " +  data.main.pressure ;
-        }catch{
-            document.querySelector("#alert").style.display = "block";
-            document.querySelector("#main").style.display = "none";
-            document.querySelector("#main2").style.display = "none";
+            document.getElementById("place").innerHTML = document.getElementById("city").value;
+            document.querySelector("#temp").innerHTML =  data.main.temp + "°" + " <strong style='color:gray;font-size:30px'>" + data.weather[0].main + "</strong>" ;
+            document.querySelector("#humidity").innerHTML =data.main.humidity;
+            document.querySelector("#description").innerHTML = data.weather[0].description ;
+            document.querySelector("#temp_max").innerHTML =  data.main.temp_max + "°";
+            document.querySelector("#temp_min").innerHTML =  data.main.temp_min + "°";
+            document.querySelector("#windDeg").innerHTML = data.wind.deg;
+            document.querySelector("#windSpeed").innerHTML =  data.wind.speed ;
+            document.querySelector("#pressure").innerHTML =   data.main.pressure ;
+            document.getElementById("city").value = "";
+        } catch{
+            // error
         }
     }
-    
-   
-
-
-
-
-
-
 }
-function get(){
 
-    document.querySelector("#city").value = localStorage.getItem("city")
+function get(){
+    var city = localStorage.getItem("city")
+    if(city){
+        // exist
+        document.getElementById("city").value = city;
+        document.getElementById("btn").click();
+    } else{
+        document.getElementById("city").value = "New york";
+        document.getElementById("btn").click();
+    }
+    
+   // return values after refresh
 
 
 }
